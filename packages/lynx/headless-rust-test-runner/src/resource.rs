@@ -8,6 +8,11 @@ use url::Url;
 
 use crate::{Error, Result};
 
+#[cfg(not(test))]
+const MAX_HTTP_RESPONSE_BYTES: u64 = 128 * 1024 * 1024;
+#[cfg(test)]
+const MAX_HTTP_RESPONSE_BYTES: u64 = 1024;
+
 #[derive(Clone)]
 pub(crate) struct ResourceContext {
   base_url: Arc<Mutex<String>>,
@@ -150,7 +155,9 @@ fn fetch_http(url: &str) -> Result<Vec<u8>> {
   let mut bytes = Vec::new();
   response
     .into_body()
-    .into_reader()
+    .into_with_config()
+    .limit(MAX_HTTP_RESPONSE_BYTES)
+    .reader()
     .read_to_end(&mut bytes)
     .map_err(Error::from)?;
   Ok(bytes)
@@ -178,6 +185,10 @@ fn safe_join(root: &Path, relative: &str) -> Result<PathBuf> {
 
 #[cfg(test)]
 mod tests {
+  use std::io::Write;
+  use std::net::TcpListener;
+  use std::thread;
+
   use super::*;
 
   #[test]
@@ -230,5 +241,27 @@ mod tests {
       "assets://lynx_core.js.map",
       ResourceType::Generic
     )));
+  }
+
+  #[test]
+  fn http_fetch_rejects_oversized_responses() {
+    let listener = TcpListener::bind("127.0.0.1:0").unwrap();
+    let address = listener.local_addr().unwrap();
+    let server = thread::spawn(move || {
+      let (mut stream, _) = listener.accept().unwrap();
+      let body = vec![b'x'; MAX_HTTP_RESPONSE_BYTES as usize + 1];
+      write!(
+        stream,
+        "HTTP/1.1 200 OK\r\nContent-Length: {}\r\n\r\n",
+        body.len()
+      )
+      .unwrap();
+      stream.write_all(&body).unwrap();
+    });
+
+    let result = fetch_http(&format!("http://{address}/bundle.lynx"));
+
+    assert!(result.is_err());
+    server.join().unwrap();
   }
 }
