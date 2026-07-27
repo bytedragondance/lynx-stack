@@ -1006,8 +1006,8 @@ importers:
   packages/genui/server:
     dependencies:
       '@ai-sdk/openai':
-        specifier: ^3.0.87
-        version: 3.0.87(zod@4.4.3)
+        specifier: ^3.0.88
+        version: 3.0.88(zod@4.4.3)
       '@aws-sdk/client-s3':
         specifier: ^3.1093.0
         version: 3.1093.0
@@ -2659,8 +2659,8 @@ packages:
   '@adobe/css-tools@4.4.2':
     resolution: {integrity: sha512-baYZExFpsdkBNuvGKTKWCwKH57HRZLVtycZS05WTQNVOiXVSeAki3nU35zlRbToeMW8aHlJfyS+1C4BOv27q0A==}
 
-  '@ai-sdk/openai@3.0.87':
-    resolution: {integrity: sha512-fg0Lyr99bX2ApS0+cgKlndOK3l53nNF6JtlQcPsMVp0/tgzAMZSXQ+H5GAy0pdJjevmmwMY5rQaq3L6wE+cSvA==}
+  '@ai-sdk/openai@3.0.88':
+    resolution: {integrity: sha512-6M4+bxK/UMijDYK2ia1hCKYma1iajFYxHDlhbinFUdhH2WbFsjoZRMpSjEMlTOBptqmh2J1JclKnprGulF8WwQ==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
@@ -12118,7 +12118,7 @@ snapshots:
 
   '@adobe/css-tools@4.4.2': {}
 
-  '@ai-sdk/openai@3.0.87(zod@4.4.3)':
+  '@ai-sdk/openai@3.0.88(zod@4.4.3)':
     dependencies:
       '@ai-sdk/provider': 3.0.14
       '@ai-sdk/provider-utils': 4.0.40(zod@4.4.3)
