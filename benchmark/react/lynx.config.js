@@ -82,6 +82,30 @@ export default defineConfig({
         './src/patchProfile.ts',
         './cases/015-attrs-component/index.tsx',
       ],
+      '016-use-state-conditional-update': [
+        './src/patchProfile.ts',
+        './cases/016-use-state-conditional-update/index.tsx',
+      ],
+      '017-use-signal-conditional-update': [
+        './src/patchProfile.ts',
+        './cases/017-use-signal-conditional-update/index.tsx',
+      ],
+      '018-use-state-loop-update': [
+        './src/patchProfile.ts',
+        './cases/018-use-state-loop-update/index.tsx',
+      ],
+      '019-use-signal-loop-update': [
+        './src/patchProfile.ts',
+        './cases/019-use-signal-loop-update/index.tsx',
+      ],
+      '020-use-state-attribute-update': [
+        './src/patchProfile.ts',
+        './cases/020-use-state-attribute-update/index.tsx',
+      ],
+      '021-use-signal-attribute-update': [
+        './src/patchProfile.ts',
+        './cases/021-use-signal-attribute-update/index.tsx',
+      ],
     },
   },
   plugins: [
